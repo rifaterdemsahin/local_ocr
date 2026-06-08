@@ -107,7 +107,7 @@
 <body>
     <div class="container" id="main-container">
         <h1 id="main-title">Local OCR API</h1>
-        <p>A self-contained, local-only OCR (Optical Character Recognition) service designed for screen reading and AI agents. It runs <strong>Tesseract OCR</strong> inside Docker and exposes a high-performance HTTP endpoint using FastAPI.</p>
+        <p>A self-contained, local-only OCR (Optical Character Recognition) service designed for screen reading and AI agents. It runs both <strong>Tesseract OCR</strong> and deep-learning <strong>EasyOCR</strong> inside Docker, exposing a high-performance HTTP endpoint using FastAPI.</p>
         
         <div class="features">
             <div class="feature-card">
@@ -115,13 +115,14 @@
                 <p>No internet required, no third-party APIs, and no cloud latency. Your data never leaves your machine.</p>
             </div>
             <div class="feature-card">
-                <h3>⚡ Performance</h3>
-                <p>Extremely fast OCR transcription on standard screenshots.<br>
-                <span class="metric-badge">Average Latency: ~300ms</span></p>
+                <h3>⚡ Engine Performance</h3>
+                <p>Selectable dual-engine capability:<br>
+                <span class="metric-badge">Tesseract: ~300ms</span>
+                <span class="metric-badge">EasyOCR: ~600ms</span></p>
             </div>
             <div class="feature-card">
-                <h3>📷 Screenshot Preprocessing</h3>
-                <p>Performs automatic grayscale, autocontrast, and smart upscaling to yield ultra-accurate readings on small UI labels.</p>
+                <h3>📷 Smart Post-Processing</h3>
+                <p>Integrates seamlessly with local Ollama LLMs (e.g. <code>gemma3:12b</code>) to remove UI margins and reconstruction noise.</p>
             </div>
             <div class="feature-card">
                 <h3>🤖 Built for Agents</h3>
@@ -131,9 +132,9 @@
 
         <h2>API Endpoints</h2>
         <ul>
-            <li><code>POST /ocr</code> — Send image file as multipart/form-data.</li>
+            <li><code>POST /ocr?engine=easyocr</code> — Send image file as multipart/form-data (engine is optional).</li>
             <li><code>POST /ocr/base64</code> — Send image as base64 string JSON.</li>
-            <li><code>GET /health</code> — Service status and Tesseract version details.</li>
+            <li><code>GET /health</code> — Service status and engine details.</li>
         </ul>
 
         <h2>Agent Skill System Prompt</h2>
