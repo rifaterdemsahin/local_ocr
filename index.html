@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Local OCR API</title>
+    <style>
+        body {
+            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: radial-gradient(circle at top, #1e1b4b, #09090b);
+            color: #f4f4f5;
+            margin: 0;
+            padding: 40px 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 800px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+        }
+        h1 {
+            font-size: 2.5rem;
+            margin-top: 0;
+            background: linear-gradient(to right, #a5b4fc, #818cf8, #6366f1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: inline-block;
+        }
+        p {
+            line-height: 1.6;
+            color: #d4d4d8;
+            font-size: 1.1rem;
+        }
+        .features {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 30px 0;
+        }
+        .feature-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 20px;
+            border-radius: 16px;
+            transition: transform 0.2s ease, border-color 0.2s ease;
+        }
+        .feature-card:hover {
+            transform: translateY(-2px);
+            border-color: rgba(99, 102, 241, 0.4);
+        }
+        .feature-card h3 {
+            margin-top: 0;
+            color: #818cf8;
+        }
+        .feature-card p {
+            font-size: 0.95rem;
+            margin-bottom: 0;
+        }
+        pre {
+            background: #09090b;
+            padding: 16px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            overflow-x: auto;
+            color: #a5b4fc;
+        }
+        code {
+            font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="main-container">
+        <h1 id="main-title">Local OCR API</h1>
+        <p>A self-contained, local-only OCR (Optical Character Recognition) service designed for screen reading and AI agents. It runs <strong>Tesseract OCR</strong> inside Docker and exposes a high-performance HTTP endpoint using FastAPI.</p>
+        
+        <div class="features">
+            <div class="feature-card">
+                <h3>🔒 100% Local</h3>
+                <p>No internet required, no third-party APIs, and no cloud latency. Your data never leaves your machine.</p>
+            </div>
+            <div class="feature-card">
+                <h3>⚡ Fast & Light</h3>
+                <p>Optimized for Apple Silicon & Intel CPUs. Dockerized for painless setup without polluting your global system dependencies.</p>
+            </div>
+            <div class="feature-card">
+                <h3>📷 Screenshot Preprocessing</h3>
+                <p>Performs automatic grayscale, autocontrast, and smart upscaling to yield ultra-accurate readings on small UI labels.</p>
+            </div>
+            <div class="feature-card">
+                <h3>🤖 Built for Agents</h3>
+                <p>Features endpoints designed for file uploads and base64-encoded strings (perfect for in-memory LLM pipelines).</p>
+            </div>
+        </div>
+
+        <h2>API Endpoints</h2>
+        <ul>
+            <li><code>POST /ocr</code> — Send image file as multipart/form-data.</li>
+            <li><code>POST /ocr/base64</code> — Send image as base64 string JSON.</li>
+            <li><code>GET /health</code> — Service status and Tesseract version details.</li>
+        </ul>
+
+        <h2>Quick Start</h2>
+        <pre><code>docker compose up -d --build
+curl -s localhost:8000/health</code></pre>
+    </div>
+</body>
+</html>
