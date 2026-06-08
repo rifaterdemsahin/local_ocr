@@ -1,0 +1,10 @@
+# Ignore image files
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.webp
+
+# Ignore OCR outputs and test results
+output/*.json
+output/result.json
