@@ -1,5 +1,7 @@
 # Local OCR API — Dockerized screenshot reader for agents
 
+> https://rifaterdemsahin.github.io/local_ocr/
+
 A self-contained, local-only OCR service. Runs Tesseract inside Docker, exposes an HTTP endpoint, and returns extracted text as JSON. Built for Apple Silicon / Intel MacBook Pro. No cloud, no API keys, no GPU required.
 
 Everything you need is in this file. Copy each code block into the named file, then build and run.
