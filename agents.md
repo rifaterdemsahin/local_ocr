@@ -37,3 +37,13 @@ def local_ocr(image_path: str) -> str:
         r = requests.post(url, files=files)
     return r.json().get("text", "")
 ```
+
+## LLM Correction (Post-Processing)
+
+We use **`llama3:latest`** (Meta Llama 3 8B) running on **Ollama** locally to correct transcription errors, delete hallucinated window margins, and rebuild logical output structures.
+
+### Recommended Models for correction:
+1. **`llama3:latest`** (Default) — Balanced performance, very fast local CPU inference.
+2. **`deepseek-r1:latest`** — Great reasoning capabilities for cleaning complex layouts.
+3. **`gemma3:12b`** / **`gemma3:27b`** — High accuracy formatting.
+
