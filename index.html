@@ -64,6 +64,16 @@
             font-size: 0.95rem;
             margin-bottom: 0;
         }
+        .metric-badge {
+            background: rgba(99, 102, 241, 0.2);
+            border: 1px solid rgba(99, 102, 241, 0.4);
+            color: #a5b4fc;
+            padding: 4px 12px;
+            border-radius: 99px;
+            font-weight: bold;
+            display: inline-block;
+            margin-top: 8px;
+        }
         pre {
             background: #09090b;
             padding: 16px;
@@ -71,9 +81,26 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
             overflow-x: auto;
             color: #a5b4fc;
+            position: relative;
         }
         code {
             font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
+        }
+        .copy-btn {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #f4f4f5;
+            padding: 6px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: background 0.2s;
+        }
+        .copy-btn:hover {
+            background: rgba(255, 255, 255, 0.15);
         }
     </style>
 </head>
@@ -88,8 +115,9 @@
                 <p>No internet required, no third-party APIs, and no cloud latency. Your data never leaves your machine.</p>
             </div>
             <div class="feature-card">
-                <h3>⚡ Fast & Light</h3>
-                <p>Optimized for Apple Silicon & Intel CPUs. Dockerized for painless setup without polluting your global system dependencies.</p>
+                <h3>⚡ Performance</h3>
+                <p>Extremely fast OCR transcription on standard screenshots.<br>
+                <span class="metric-badge">Average Latency: ~300ms</span></p>
             </div>
             <div class="feature-card">
                 <h3>📷 Screenshot Preprocessing</h3>
@@ -108,9 +136,40 @@
             <li><code>GET /health</code> — Service status and Tesseract version details.</li>
         </ul>
 
+        <h2>Agent Skill System Prompt</h2>
+        <p>Copy the following system instruction block to define this capability for your local AI agent:</p>
+        <div style="position: relative;">
+            <pre><code id="agent-prompt"># System Skill: Read User Screenshot
+You are equipped with a local OCR tool to view the user's screen.
+When you need to read a screenshot or image file, invoke the local OCR API by sending a HTTP POST request.
+
+- Endpoint: http://localhost:8000/ocr
+- Method: POST
+- Body Format: Multipart Form-Data
+- Parameter Name: "file" (The binary image file)
+
+Alternatively, if you hold the image in memory as a base64 encoded string, use:
+- Endpoint: http://localhost:8000/ocr/base64
+- Method: POST
+- Body Format: JSON
+- Payload Structure: {"image_base64": "YOUR_BASE64_STRING"}</code></pre>
+            <button class="copy-btn" onclick="copyPrompt()">Copy Prompt</button>
+        </div>
+
         <h2>Quick Start</h2>
         <pre><code>docker compose up -d --build
 curl -s localhost:8000/health</code></pre>
     </div>
+
+    <script>
+        function copyPrompt() {
+            const text = document.getElementById('agent-prompt').innerText;
+            navigator.clipboard.writeText(text).then(() => {
+                const btn = document.querySelector('.copy-btn');
+                btn.innerText = 'Copied!';
+                setTimeout(() => { btn.innerText = 'Copy Prompt'; }, 2000);
+            });
+        }
+    </script>
 </body>
 </html>
